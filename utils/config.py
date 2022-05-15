@@ -39,4 +39,13 @@ class Config(_Config):
 
     token: str = ''
     role_msg_id: str = ''
-    log_level: str = ''
+    log_level: str = 'INFO'
+    guild_id: str = ''
+    rule_channel_id: str = ''
+    github_events_api: str = ''
+    last_event_id: int = 0
+    update_channel: str = ''
+
+    def set_last_event(self, event_id) -> None:
+        self.last_event_id = event_id
+        self.save()
