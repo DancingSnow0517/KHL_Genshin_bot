@@ -1,3 +1,4 @@
 mcdreforged~=2.3.3
 khl.py~=0.2.10
 aiohttp>=3.8.1
+colorlog>=6.6.0

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 from mcdreforged.utils.serializer import Serializable
 from ruamel import yaml
-from typing import IO
+from typing import IO, Dict
 
 
 class _Config(Serializable, ABC):
@@ -45,6 +45,9 @@ class Config(_Config):
     github_events_api: str = ''
     last_event_id: int = 0
     update_channel: str = ''
+    agree_role_id: int = 0
+    emoji_to_role_id_map: Dict[str, int] = {}
+    log_file: bool = False
 
     def set_last_event(self, event_id) -> None:
         self.last_event_id = event_id

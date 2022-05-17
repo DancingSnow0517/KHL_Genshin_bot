@@ -38,8 +38,8 @@ async def push_to_khl(event, genshin_bot: 'GenshinBot'):
     event_type = event['type']
     card = Card()
     if event_type == 'PushEvent':
-        actor = event['actor']
-        card.append(Section(Kmarkdown(f'**{actor["display_login"]}**'), mode='left', accessory=Image(src=actor['avatar_url'], size='sm', circle=True)))
+        user = event['actor']
+        card.append(Section(Kmarkdown(f'**{user["display_login"]}**'), mode='left', accessory=Image(src=user['avatar_url'], size='sm', circle=True)))
         channel = await genshin_bot.fetch_public_channel(genshin_bot.config.update_channel)
         commits = event['payload']['commits']
         repo_name = event["repo"]["name"]
@@ -62,8 +62,8 @@ async def push_to_khl(event, genshin_bot: 'GenshinBot'):
         await channel.send([card.build()])
         genshin_bot.config.set_last_event(int(event['id']))
     elif event_type == 'IssuesEvent':
-        actor = event['actor']
-        card.append(Section(Kmarkdown(f'**{actor["display_login"]}**'), mode='left', accessory=Image(src=actor['avatar_url'], size='sm', circle=True)))
+        user = event['actor']
+        card.append(Section(Kmarkdown(f'**{user["display_login"]}**'), mode='left', accessory=Image(src=user['avatar_url'], size='sm', circle=True)))
         channel = await genshin_bot.fetch_public_channel(genshin_bot.config.update_channel)
         card.set_color(NamedColor.GREEN)
         action = event['payload']['action']
@@ -82,8 +82,8 @@ async def push_to_khl(event, genshin_bot: 'GenshinBot'):
         genshin_bot.config.set_last_event(int(event['id']))
     elif event_type == 'IssueCommentEvent':
         card.set_color(NamedColor.GOLD)
-        actor = event['actor']
-        card.append(Section(Kmarkdown(f'**{actor["display_login"]}**'), mode='left', accessory=Image(src=actor['avatar_url'], size='sm', circle=True)))
+        user = event['payload']['comment']['user']
+        card.append(Section(Kmarkdown(f'**{user["login"]}**'), mode='left', accessory=Image(src=user['avatar_url'], size='sm', circle=True)))
         channel = await genshin_bot.fetch_public_channel(genshin_bot.config.update_channel)
         comment = event['payload']['comment']
         issue = event['payload']['issue']
