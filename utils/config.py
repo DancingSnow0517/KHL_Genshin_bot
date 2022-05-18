@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 from mcdreforged.utils.serializer import Serializable
 from ruamel import yaml
-from typing import IO, Dict, List
+from typing import IO, Dict, List, Optional
 
 
 class _Config(Serializable, ABC):
@@ -79,3 +79,8 @@ class Cookies(_Config):
             return True
         except IndexError:
             return False
+
+    def list_cookies(self, user: str) -> Optional[List[str]]:
+        if user not in self.cookies:
+            return None
+        return self.cookies[user]

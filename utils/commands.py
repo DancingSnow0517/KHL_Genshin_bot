@@ -4,7 +4,7 @@ from khl import Message
 from khl_card.accessory import *
 from khl_card.card import Card
 from khl_card.modules import *
-from khl_card.types import ThemeTypes
+from khl_card.types import ThemeTypes, NamedColor
 
 if TYPE_CHECKING:
     from ..bot import GenshinBot
@@ -35,3 +35,16 @@ def registry(genshin_bot: 'GenshinBot'):
             await msg.ctx.channel.send('解除绑定成功', temp_target_id=msg.author.id)
         else:
             await msg.ctx.channel.send('解除绑定失败', temp_target_id=msg.author.id)
+
+    @genshin_bot.command(name='list')
+    async def cookies_list(msg: Message):
+        await msg.delete()
+        cookies = genshin_bot.cookies.list_cookies(msg.author.id)
+        if cookies is None:
+            await msg.ctx.channel.send('当前没有绑定信息', temp_target_id=msg.author.id)
+            return
+        else:
+            card = Card(Header('绑定列表'), color=NamedColor.YELLOW)
+            for i in range(len(cookies)):
+                card.append(Section(Kmarkdown(f'{i + 1}. {cookies[i].replace(cookies[i][5:-5], "*********", 1)}')))
+            await msg.ctx.channel.send([card.build()], temp_target_id=msg.author.id)
