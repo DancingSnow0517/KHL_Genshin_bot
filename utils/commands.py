@@ -27,3 +27,11 @@ def registry(genshin_bot: 'GenshinBot'):
             await msg.ctx.channel.send('添加成功', temp_target_id=msg.author.id)
         else:
             await msg.ctx.channel.send('添加失败', temp_target_id=msg.author.id)
+
+    @genshin_bot.command(name='unbind')
+    async def unbind(msg: Message, index: int):
+        await msg.delete()
+        if genshin_bot.cookies.remove_cookie(msg.author.id, index - 1):
+            await msg.ctx.channel.send('解除绑定成功', temp_target_id=msg.author.id)
+        else:
+            await msg.ctx.channel.send('解除绑定失败', temp_target_id=msg.author.id)

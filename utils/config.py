@@ -69,3 +69,13 @@ class Cookies(_Config):
             self.save()
             return True
         return False
+
+    def remove_cookie(self, user: str, index: int) -> bool:
+        if user not in self.cookies:
+            return False
+        try:
+            del self.cookies[user][index]
+            self.save()
+            return True
+        except IndexError:
+            return False
