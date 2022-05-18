@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 from mcdreforged.utils.serializer import Serializable
 from ruamel import yaml
-from typing import IO, Dict
+from typing import IO, Dict, List
 
 
 class _Config(Serializable, ABC):
@@ -52,3 +52,20 @@ class Config(_Config):
     def set_last_event(self, event_id) -> None:
         self.last_event_id = event_id
         self.save()
+
+
+class Cookies(_Config):
+    @staticmethod
+    def get_file() -> str:
+        return 'cookies.yml'
+
+    cookies: Dict[str, List[str]] = {}
+
+    def add_cookie(self, user: str, cookie: str) -> bool:
+        if user not in self.cookies:
+            self.cookies[user] = []
+        if cookie not in self.cookies[user]:
+            self.cookies[user].append(cookie)
+            self.save()
+            return True
+        return False

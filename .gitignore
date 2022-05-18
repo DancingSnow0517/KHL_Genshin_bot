@@ -131,3 +131,4 @@ dmypy.json
 .idea/
 /logs/
 /config.yml
+/cookies.yml

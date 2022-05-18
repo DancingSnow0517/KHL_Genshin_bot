@@ -5,7 +5,7 @@ import sys
 from khl import Bot, Message, MessageTypes
 
 from utils import commands, events, github_events
-from utils.config import Config
+from utils.config import Config, Cookies
 from utils.logger import ColoredLogger
 
 
@@ -13,6 +13,7 @@ class GenshinBot(Bot):
 
     def __init__(self, config: Config):
         self.config = config
+        self.cookies = Cookies.load()
         self.config.save()
 
         self.logger = ColoredLogger(level=self.config.log_level)
