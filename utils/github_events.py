@@ -14,7 +14,9 @@ async def get_events(genshin_bot: 'GenshinBot') -> Optional[List[dict]]:
         try:
             async with session.get(genshin_bot.config.github_events_api) as response:
                 events = await response.json()  # type: List[dict]
-                return events
+                if isinstance(events, list):
+                    return events
+                return None
         except TimeoutError as e:
             return None
 
